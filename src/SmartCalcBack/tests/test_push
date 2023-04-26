@@ -1,0 +1,21 @@
+  #test push_1
+
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+
+  ck_assert_ptr_nonnull(head);
+  ck_assert_double_eq_tol((*head).value, 1.2, 1e7);
+  ck_assert_int_eq((*head).priority, 0);
+  ck_assert_str_eq((*head).word, "\0");
+  ck_assert_ptr_null((*head).next);
+
+  push(&head, 0.0, "+", 1);
+
+  ck_assert_ptr_nonnull((*head).next);
+  ck_assert_double_eq_tol((*head).value, 0.0, 1e7);
+  ck_assert_int_eq((*head).priority, 1);
+  ck_assert_str_eq((*head).word, "+");
+  ck_assert_ptr_nonnull((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);

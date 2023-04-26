@@ -1,0 +1,149 @@
+  #test validator_1
+
+  char *arr = "1+1";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_2
+
+  char *arr = "cos(2)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_3
+
+  char *arr = "2.2*7";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_4
+
+  char *arr = "-2.2*0.1*atan(+5)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_5
+
+  char *arr = "(12mod(-ln(0.1)))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_6
+
+  char *arr = "+0.2*((-acos(-2.5))/(log(2.7)))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_7
+
+  char *arr = "0.2mod0.3";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_8
+
+  char *arr = "(12+(-3))mod3";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_9
+
+  char *arr = "2.mod6.+(3.)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_10
+
+  char *arr = "-(1+1)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_11
+
+  char *arr = "2+2.";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_12
+
+  char *arr = "cos2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_13
+
+  char *arr = "cocos(2)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_14
+
+  char *arr = "2mod+2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_15
+
+  char *arr = "(2+3))";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_16
+
+  char *arr = "((2+3)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_17
+
+  char *arr = ")(2+3)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_18
+
+  char *arr = "a+7";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_19
+
+  char *arr = "2+3*cos()";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_20
+
+  char *arr = "2+3*cos(";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_21
+
+  char *arr = "2+3/";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_22
+
+  char *arr = "2+00.2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_23
+
+  char *arr = "cor(2)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_24
+
+  char *arr = "2mods4";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_25
+
+  char *arr = "7+b";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_26
+
+  char *arr = "4.cos(0)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_27
+
+  char *arr = "7.7.7+7";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_28
+
+  char *arr = "2+x*3+xmodx";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_29
+
+  char *arr = "x+(x)-(cos(+x))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_30
+
+  char *arr = "5mot5";
+  ck_assert(validator(arr) == 1);

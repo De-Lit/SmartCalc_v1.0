@@ -1,0 +1,634 @@
+#include <stdlib.h>
+
+#include "smart_calc.h"
+#include "./operation_functions/operation_functions.h"
+  #test calculate_station_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 2;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_2
+
+  char *input_str = "(-2)*(-x)";
+  double x = -1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 2;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_3
+
+  char *input_str = "3";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 3;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_4
+
+  char *input_str = "1/2";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.5;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_5
+
+  char *input_str = "1/x";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  ck_assert_double_infinite(result);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_6
+
+  char *input_str = "x/x";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  ck_assert_double_nan(result);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_7
+
+  char *input_str = "5^x";
+  double x = 2;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 25;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_8
+
+  char *input_str = "xmodx";
+  double x = 2;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_9
+
+  char *input_str = "cos(x)";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_10
+
+  char *input_str = "sin(x)";
+  double x = 1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_11
+
+  char *input_str = "tan(x)";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_12
+
+  char *input_str = "acos(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1.047197551;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_13
+
+  char *input_str = "asin(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.5235987756;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_14
+
+  char *input_str = "atan(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.463647609;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_15
+
+  char *input_str = "sqrt(x)";
+  double x = 9;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 3;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_16
+
+  char *input_str = "ln(x)";
+  double x = 1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_17
+
+  char *input_str = "log(x)";
+  double x = 10;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_18
+
+  char *input_str = "log(x)+(+25*(-x))/(-5)";
+  double x = 10;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 51;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_19
+
+  char *input_str = "1.1+(-25*3+7-cos(1))";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = -67.44030231;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+  #test free_list_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  free_list(&head);
+  ck_assert_ptr_null(head);
+  #test parser_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_2
+
+  char *input_str = "1+x";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_3
+
+  char *input_str = "cos(0)+2.2";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_4
+
+  char *input_str = "cos(0)modx";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_5
+
+  char *input_str = "(-5mod4)";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_6
+
+  char *input_str = "-5mod4.1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_7
+
+  char *input_str = "2^2*x";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+  #test peep_1
+
+  list_t N = {.value = 0.0, .priority = 0, .word = {'\0'}, .next = NULL};
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+  push(&head, 0.0, "+", 1);
+
+  N = peep(&head);
+
+  ck_assert_double_eq_tol(N.value, 0.0, 1e7);
+  ck_assert_int_eq(N.priority, 1);
+  ck_assert_str_eq(N.word, "+");
+  ck_assert_ptr_nonnull(N.next);
+
+  ck_assert_double_eq_tol((*head).value, 0.0, 1e7);
+  ck_assert_int_eq((*head).priority, 1);
+  ck_assert_str_eq((*head).word, "+");
+  ck_assert_ptr_nonnull((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+
+  #test peep_2
+
+  list_t *head = NULL;
+
+  peep(&head);
+
+  ck_assert_ptr_null(head);
+  #test pop_1
+
+  list_t N = {.value = 0.0, .priority = 0, .word = {'\0'}, .next = NULL};
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+  push(&head, 0.0, "+", 1);
+
+  N = pop(&head);
+
+  ck_assert_double_eq_tol(N.value, 0.0, 1e7);
+  ck_assert_int_eq(N.priority, 1);
+  ck_assert_str_eq(N.word, "+");
+  ck_assert_ptr_nonnull(N.next);
+
+  ck_assert_double_eq_tol((*head).value, 1.2, 1e7);
+  ck_assert_int_eq((*head).priority, 0);
+  ck_assert_str_eq((*head).word, "\0");
+  ck_assert_ptr_null((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+
+  #test pop_2
+
+  list_t N = {.value = 0.0, .priority = 0, .word = {'\0'}, .next = NULL};
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+
+  N = pop(&head);
+
+  ck_assert_double_eq_tol(N.value, 1.2, 1e7);
+  ck_assert_int_eq(N.priority, 0);
+  ck_assert_str_eq(N.word, "\0");
+  ck_assert_ptr_null(N.next);
+
+  ck_assert_ptr_null(head);
+
+  #test pop_3
+
+  list_t *head = NULL;
+
+  pop(&head);
+
+  ck_assert_ptr_null(head);
+  #test push_1
+
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+
+  ck_assert_ptr_nonnull(head);
+  ck_assert_double_eq_tol((*head).value, 1.2, 1e7);
+  ck_assert_int_eq((*head).priority, 0);
+  ck_assert_str_eq((*head).word, "\0");
+  ck_assert_ptr_null((*head).next);
+
+  push(&head, 0.0, "+", 1);
+
+  ck_assert_ptr_nonnull((*head).next);
+  ck_assert_double_eq_tol((*head).value, 0.0, 1e7);
+  ck_assert_int_eq((*head).priority, 1);
+  ck_assert_str_eq((*head).word, "+");
+  ck_assert_ptr_nonnull((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+  #test reverse_list_1
+
+  list_t N = {.value = 0.0, .priority = 0, .word = {'\0'}, .next = NULL};
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+  push(&head, 0.0, "+", 1);
+
+  reverse_list(&head);
+
+  N = pop(&head);
+
+  ck_assert_double_eq_tol(N.value, 1.2, 1e7);
+  ck_assert_int_eq(N.priority, 0);
+  ck_assert_str_eq(N.word, "\0");
+  ck_assert_ptr_nonnull(N.next);
+
+  ck_assert_double_eq_tol((*head).value, 0.0, 1e7);
+  ck_assert_int_eq((*head).priority, 1);
+  ck_assert_str_eq((*head).word, "+");
+  ck_assert_ptr_null((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+
+  #test reverse_list_2
+
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+
+  reverse_list(&head);
+
+  ck_assert_double_eq_tol((*head).value, 1.2, 1e7);
+  ck_assert_int_eq((*head).priority, 0);
+  ck_assert_str_eq((*head).word, "\0");
+  ck_assert_ptr_null((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+
+  #test reverse_list_3
+  list_t *head = NULL;
+  reverse_list(&head);
+  ck_assert_ptr_null(head);
+  #test smart_calc_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  double result = smart_calc(input_str, x);
+  double origin = 2;
+  char *output_str = "1+1";
+  ck_assert_str_eq(input_str, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);
+
+  #test smart_calc_2
+
+  char *input_str = "1+";
+  char tmp[256] = {"\0"};
+  strcat(tmp, input_str);
+  double x = 0.0;
+  double result = smart_calc(tmp, x);
+  double origin = 0;
+  char *output_str = "Error";
+  ck_assert_str_eq(tmp, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);
+
+  #test smart_calc_3
+
+  char *input_str = "";
+  double x = 0.0;
+  double result = smart_calc(input_str, x);
+  double origin = 0;
+  char *output_str = "";
+  ck_assert_str_eq(input_str, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  #test validator_1
+
+  char *arr = "1+1";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_2
+
+  char *arr = "cos(2)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_3
+
+  char *arr = "2.2*7";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_4
+
+  char *arr = "-2.2*0.1*atan(+5)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_5
+
+  char *arr = "(12mod(-ln(0.1)))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_6
+
+  char *arr = "+0.2*((-acos(-2.5))/(log(2.7)))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_7
+
+  char *arr = "0.2mod0.3";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_8
+
+  char *arr = "(12+(-3))mod3";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_9
+
+  char *arr = "2.mod6.+(3.)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_10
+
+  char *arr = "-(1+1)";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_11
+
+  char *arr = "2+2.";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_12
+
+  char *arr = "cos2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_13
+
+  char *arr = "cocos(2)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_14
+
+  char *arr = "2mod+2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_15
+
+  char *arr = "(2+3))";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_16
+
+  char *arr = "((2+3)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_17
+
+  char *arr = ")(2+3)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_18
+
+  char *arr = "a+7";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_19
+
+  char *arr = "2+3*cos()";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_20
+
+  char *arr = "2+3*cos(";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_21
+
+  char *arr = "2+3/";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_22
+
+  char *arr = "2+00.2";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_23
+
+  char *arr = "cor(2)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_24
+
+  char *arr = "2mods4";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_25
+
+  char *arr = "7+b";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_26
+
+  char *arr = "4.cos(0)";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_27
+
+  char *arr = "7.7.7+7";
+  ck_assert(validator(arr) == 1);
+
+  #test validator_28
+
+  char *arr = "2+x*3+xmodx";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_29
+
+  char *arr = "x+(x)-(cos(+x))";
+  ck_assert(validator(arr) == 0);
+
+  #test validator_30
+
+  char *arr = "5mot5";
+  ck_assert(validator(arr) == 1);

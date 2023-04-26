@@ -1,0 +1,29 @@
+  #test peep_1
+
+  list_t N = {.value = 0.0, .priority = 0, .word = {'\0'}, .next = NULL};
+  list_t *head = NULL;
+  push(&head, 1.2, "\0", 0);
+  push(&head, 0.0, "+", 1);
+
+  N = peep(&head);
+
+  ck_assert_double_eq_tol(N.value, 0.0, 1e7);
+  ck_assert_int_eq(N.priority, 1);
+  ck_assert_str_eq(N.word, "+");
+  ck_assert_ptr_nonnull(N.next);
+
+  ck_assert_double_eq_tol((*head).value, 0.0, 1e7);
+  ck_assert_int_eq((*head).priority, 1);
+  ck_assert_str_eq((*head).word, "+");
+  ck_assert_ptr_nonnull((*head).next);
+
+  free_list(&head);
+  ck_assert_ptr_null(head);
+
+  #test peep_2
+
+  list_t *head = NULL;
+
+  peep(&head);
+
+  ck_assert_ptr_null(head);

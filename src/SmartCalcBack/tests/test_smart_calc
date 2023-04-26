@@ -1,0 +1,31 @@
+  #test smart_calc_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  double result = smart_calc(input_str, x);
+  double origin = 2;
+  char *output_str = "1+1";
+  ck_assert_str_eq(input_str, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);
+
+  #test smart_calc_2
+
+  char *input_str = "1+";
+  char tmp[256] = {"\0"};
+  strcat(tmp, input_str);
+  double x = 0.0;
+  double result = smart_calc(tmp, x);
+  double origin = 0;
+  char *output_str = "Error";
+  ck_assert_str_eq(tmp, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);
+
+  #test smart_calc_3
+
+  char *input_str = "";
+  double x = 0.0;
+  double result = smart_calc(input_str, x);
+  double origin = 0;
+  char *output_str = "";
+  ck_assert_str_eq(input_str, output_str);
+  ck_assert_double_eq_tol(result, origin, 1e7);

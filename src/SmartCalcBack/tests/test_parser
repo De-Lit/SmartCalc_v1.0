@@ -1,0 +1,62 @@
+  #test parser_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_2
+
+  char *input_str = "1+x";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_3
+
+  char *input_str = "cos(0)+2.2";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_4
+
+  char *input_str = "cos(0)modx";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_5
+
+  char *input_str = "(-5mod4)";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_6
+
+  char *input_str = "-5mod4.1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;
+
+  #test parser_7
+
+  char *input_str = "2^2*x";
+  double x = 1.1;
+  list_t *head = parser(input_str, x);
+  ck_assert_ptr_nonnull(head);
+  free_list(&head);
+  head = NULL;

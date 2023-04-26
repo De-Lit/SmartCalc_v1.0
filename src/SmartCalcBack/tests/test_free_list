@@ -1,0 +1,7 @@
+  #test free_list_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  free_list(&head);
+  ck_assert_ptr_null(head);

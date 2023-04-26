@@ -1,0 +1,244 @@
+  #test calculate_station_1
+
+  char *input_str = "1+1";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 2;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_2
+
+  char *input_str = "(-2)*(-x)";
+  double x = -1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 2;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_3
+
+  char *input_str = "3";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 3;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_4
+
+  char *input_str = "1/2";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.5;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_5
+
+  char *input_str = "1/x";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  ck_assert_double_infinite(result);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_6
+
+  char *input_str = "x/x";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  ck_assert_double_nan(result);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_7
+
+  char *input_str = "5^x";
+  double x = 2;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 25;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_8
+
+  char *input_str = "xmodx";
+  double x = 2;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_9
+
+  char *input_str = "cos(x)";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_10
+
+  char *input_str = "sin(x)";
+  double x = 1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_11
+
+  char *input_str = "tan(x)";
+  double x = 0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_12
+
+  char *input_str = "acos(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1.047197551;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_13
+
+  char *input_str = "asin(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.5235987756;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_14
+
+  char *input_str = "atan(x)";
+  double x = 0.5;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0.463647609;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_15
+
+  char *input_str = "sqrt(x)";
+  double x = 9;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 3;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_16
+
+  char *input_str = "ln(x)";
+  double x = 1;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 0;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_17
+
+  char *input_str = "log(x)";
+  double x = 10;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 1;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_18
+
+  char *input_str = "log(x)+(+25*(-x))/(-5)";
+  double x = 10;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = 51;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);
+
+  #test calculate_station_19
+
+  char *input_str = "1.1+(-25*3+7-cos(1))";
+  double x = 0.0;
+  list_t *head = parser(input_str, x);
+  reverse_list(&head);
+  head = calculate_station(head);
+  double result = head->value;
+  double origin = -67.44030231;
+  ck_assert_double_eq_tol(result, origin, 1e7);
+  pop(&head);
+  ck_assert_ptr_null(head);

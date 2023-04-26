@@ -1,0 +1,4 @@
+#include <stdlib.h>
+
+#include "smart_calc.h"
+#include "./operation_functions/operation_functions.h"
