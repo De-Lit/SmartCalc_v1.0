@@ -137,13 +137,16 @@ extern int validator(char *argv) {
       case OPEN_BRACKET:  // '('
         if (strchr(digits, pars.c)) {
           pars.c_type = DIGIT;
+          if (pars.c == '0') {
+            pars.null_flag = 1;
+          }
         } else if (pars.c == 'x') {
           pars.c_type = X;
         } else if (strchr(unary_operation, pars.c)) {
           pars.c_type = UNARY_OPERATION;
         } else if (pars.c == '(') {
           pars.c_type = OPEN_BRACKET;
-          pars.bracket_count++;
+          ++pars.bracket_count;
         } else {
           is_valid_word_unary(&pars);
         }

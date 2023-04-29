@@ -18,11 +18,11 @@ extern list_t *parser(char *argv, double x) {
   int unary_arr_len = sizeof unary_operation / sizeof unary_operation[0];
   int binary_arr_len = sizeof binary_operation / sizeof binary_operation[0];
   int flag = 0;
-  for (int i = 0; i < len; i++) {
+  for (int i = 0; i < len; ++i) {
     if (strchr(digits, argv[i])) {
       do {
         strncat(c, &argv[i], 1);
-        i++;
+        ++i;
       } while (strchr(digits, argv[i]) && argv[i] != '\0');
       value = atof(c);
       memset(c, '\0', strlen(c));
@@ -45,7 +45,7 @@ extern list_t *parser(char *argv, double x) {
             flag = 1;
           }
         }
-        i++;
+        ++i;
       } while (!flag);
       push(&head, 0, c, priority);
       flag = 0;
@@ -55,11 +55,12 @@ extern list_t *parser(char *argv, double x) {
       if (strchr(digits, argv[i])) {
         do {
           strncat(c, &argv[i], 1);
-          i++;
+          ++i;
         } while (strchr(digits, argv[i]) && argv[i] != '\0');
         value = atof(c);
         priority = digit;
         memset(c, '\0', strlen(c));
+        --i;
       } else if (strchr(arithmetic_1, argv[i])) {
         if (head == NULL || head->word[0] == '(') {
           push(&head, 0, "\0", 0);
